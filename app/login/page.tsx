@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import React, { useState, SyntheticEvent } from 'react';
+import { User2 } from 'lucide-react';
 
 export default async function Login() {
   let loggedIn = false;
@@ -33,7 +34,10 @@ export default async function Login() {
 
   return (
     <div className="flex flex-col h-screen w-full justify-center items-center">
-      <Tabs defaultValue="create-account" className="w-[400px] border rounded-md pb-4 shadow-2xl">
+      <Tabs
+        defaultValue="create-account"
+        className="w-[400px] border rounded-md pb-4 shadow-2xl"
+      >
         <TabsList className="grid w-full grid-cols-2 rounded-b-none">
           <TabsTrigger value="login-account">Entrar</TabsTrigger>
           <TabsTrigger value="reset-password">Resetar minha senha</TabsTrigger>
@@ -57,8 +61,13 @@ export default async function Login() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Entrar</Button>
-              <Button variant="outline" className="ml-2">Fazer o cadastro</Button>
+              <Button>
+                Entrar
+                <User2 size={18} className="ml-2 mr-1" />
+              </Button>
+              <Button variant="outline" className="ml-2">
+                Criar conta
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -67,7 +76,8 @@ export default async function Login() {
             <CardHeader>
               <CardTitle>Resetar minha senha</CardTitle>
               <CardDescription>
-                Insira o seu e-mail para receber um link de recuperação de senha.
+                Insira o seu e-mail para receber um link de recuperação de
+                senha.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -77,7 +87,7 @@ export default async function Login() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Save password</Button>
+              <Button>Enviar link de recuperação</Button>
             </CardFooter>
           </Card>
         </TabsContent>
