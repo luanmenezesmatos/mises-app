@@ -2,20 +2,10 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import React, { useState, SyntheticEvent } from 'react';
-import { User2 } from 'lucide-react';
+import { LoginAccountForm } from '@/components/auth/login-account-form';
+import { ResetPasswordForm } from '@/components/auth/reset-password-form';
 
 export default async function Login() {
   let loggedIn = false;
@@ -38,58 +28,25 @@ export default async function Login() {
         defaultValue="create-account"
         className="w-[400px] border rounded-md pb-4 shadow-2xl"
       >
-        <TabsList className="grid w-full grid-cols-2 rounded-b-none">
-          <TabsTrigger value="login-account">Entrar</TabsTrigger>
-          <TabsTrigger value="reset-password">Resetar minha senha</TabsTrigger>
+        <TabsList className="flex justify-around items-center rounded-b-none h-14">
+          <TabsTrigger
+            value="login-account"
+            className="transition-all delay-150"
+          >
+            Entrar
+          </TabsTrigger>
+          <TabsTrigger
+            value="reset-password"
+            className="transition-all delay-150"
+          >
+            Resetar minha senha
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="login-account">
-          <Card>
-            <CardHeader>
-              <CardTitle>Entrar na minha conta</CardTitle>
-              <CardDescription>
-                Entre com seu e-mail e senha para acessar sua conta.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="email">Insira o seu e-mail</Label>
-                <Input id="email" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="password">Insira a sua senha</Label>
-                <Input id="password" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>
-                Entrar
-                <User2 size={18} className="ml-2 mr-1" />
-              </Button>
-              <Button variant="outline" className="ml-2">
-                Criar conta
-              </Button>
-            </CardFooter>
-          </Card>
+          <LoginAccountForm />
         </TabsContent>
         <TabsContent value="reset-password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Resetar minha senha</CardTitle>
-              <CardDescription>
-                Insira o seu e-mail para receber um link de recuperação de
-                senha.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Insira o seu e-mail</Label>
-                <Input id="recover-email" type="email" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Enviar link de recuperação</Button>
-            </CardFooter>
-          </Card>
+          <ResetPasswordForm />
         </TabsContent>
       </Tabs>
     </div>
