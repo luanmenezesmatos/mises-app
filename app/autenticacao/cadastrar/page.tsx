@@ -3,12 +3,12 @@ import { Metadata } from 'next';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
-import { UserAuthForm } from '@/components/user-auth-form';
+import { UserAuthForm } from '@/components/user-register-form';
 
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Autenticação — Mises',
@@ -34,24 +34,27 @@ export default async function Login() {
     <>
       <div className="md:hidden">
         <Image
-          src="/public/undraw_secure_login_pdn4.svg"
+          src="/undraw_secure_login_pdn4.svg"
           width={1280}
           height={843}
-          alt="Authentication"
+          alt="Autenticação"
           className="block dark:hidden"
         />
         <Image
-          src="/public/undraw_secure_login_pdn4.svg"
+          src="/undraw_secure_login_pdn4.svg"
           width={1280}
           height={843}
-          alt="Authentication"
+          alt="Autenticação"
           className="hidden dark:block"
         />
       </div>
       <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
-          href="/examples/authentication"
-          className={(buttonVariants({ variant: "ghost" }), "absolute right-4 top-4 md:right-8 md:top-8")}
+          href="/autenticacao/entrar"
+          className={
+            (buttonVariants({ variant: 'ghost' }),
+            'absolute right-4 top-4 md:right-8 md:top-8')
+          }
         >
           Entrar na minha conta
         </Link>
@@ -94,16 +97,16 @@ export default async function Login() {
               </p>
             </div>
             <UserAuthForm />
-            
+
             <p className="px-8 text-center text-sm text-muted-foreground">
-              Ao clicar em <b>"Criar a minha conta"</b>, você concorda com os{" "}
+              Ao clicar em <b>"Criar a minha conta"</b>, você concorda com os{' '}
               <Link
                 href="/diretrizes/termos-de-uso"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Termos de Uso
-              </Link>{" "}
-              e a{" "}
+              </Link>{' '}
+              e a{' '}
               <Link
                 href="/diretrizes/politica-de-privacidade"
                 className="underline underline-offset-4 hover:text-primary"
