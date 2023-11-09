@@ -1,124 +1,190 @@
 'use client';
 
+import * as React from 'react';
+
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Form, FormField, FormItem, FormLabel, FormDescription, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 const formSchema = z.object({
+  firstName: z
+    .string({ required_error: 'O nome é um campo obrigatório' })
+    .min(2, { message: 'Mínimo de 2 caracteres' }),
+  lastName: z
+    .string({ required_error: 'O sobrenome é um campo obrigatório' })
+    .min(2, { message: 'Mínimo de 2 caracteres' }),
   email: z
-    .string({
-      required_error: 'O e-mail é obrigatório',
-    })
-    .email({
-      message: 'O e-mail deve ser válido',
-    }),
+    .string({ required_error: 'O e-mail é um campo obrigatório' })
+    .email({ message: 'E-mail inválido' }),
   password: z
-    .string({
-      required_error: 'A senha é obrigatória',
-    })
-    .min(8, {
-      message: 'A senha deve ter no mínimo 8 caracteres',
-    }),
+    .string({ required_error: 'A senha é um campo obrigatório' })
+    .min(8, { message: 'Mínimo de 8 caracteres' }),
+  passwordConfirmation: z
+    .string({ required_error: 'A confirmação da senha é um campo obrigatório' })
+    .min(8, { message: 'Mínimo de 8 caracteres' }),
 });
 
-export default function CreateAccountForm() {
+export function UserAuthForm() {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
+      passwordConfirmation: '',
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Entrar na minha conta</CardTitle>
-        <CardDescription>
-          Entre com seu e-mail e senha para acessar sua conta.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="space-y-1">
-          <Label htmlFor="email">Insira o seu e-mail</Label>
-          <Input id="email" />
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor="password">Insira a sua senha</Label>
-          <Input id="password" type="password" />
-        </div>
-      </CardContent>
-      <CardFooter
-        className="flex flex-row justify-center items-center"
-      >
-        <Button>
-          Entrar
-          <User2 size={18} className="ml-2 mr-1" />
-        </Button>
-        <Link href="/register">
-          <Button variant="outline" className="ml-4">
-            Quero criar a minha conta!
-          </Button>
-        </Link>
-      </CardFooter>
-    </Card>
-    
-    {/* <div className="flex flex-col justify-center items-center space-y-2">
-      <span className="text-lg">You will love it.</span>
+    <div className="grid gap-6">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2"
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel htmlFor="email">E-mail</FormLabel>
-                <Input
-                  {...field}
-                  placeholder="Digite seu e-mail"
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel htmlFor="password">Senha</FormLabel>
-                <Input
-                  {...field}
-                  type="password"
-                  placeholder="Digite a sua senha"
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Criar conta</Button>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid gap-2">
+            <div className="grid gap-1 pb-5">
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            id="firstName"
+                            placeholder="Nome"
+                            type="text"
+                            autoCapitalize="none"
+                            autoComplete="given-name"
+                            autoCorrect="off"
+                          />
+                        </FormControl>
+                        <FormDescription>Aqui é o seu Nome</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Sobrenome</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            id="lastName"
+                            placeholder="Sobrenome"
+                            type="text"
+                            autoCapitalize="none"
+                            autoComplete="family-name"
+                            autoCorrect="off"
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Aqui é o seu Sobrenome
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>E-mail</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="email"
+                        placeholder="Endereço de E-mail"
+                        type="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        autoCorrect="off"
+                      />
+                    </FormControl>
+                    <FormDescription>Aqui é o seu E-mail</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="password"
+                        placeholder="Senha"
+                        type="password"
+                        autoComplete="new-password"
+                      />
+                    </FormControl>
+                    <FormDescription>Aqui é a sua Senha</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="passwordConfirmation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirmação da Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="passwordConfirmation"
+                        placeholder="Confirmação da Senha"
+                        type="password"
+                        autoComplete="new-password"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Aqui é a Confirmação da Senha
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <Button
+            className={(buttonVariants({ variant: 'default' }), 'w-full')}
+          >
+            Cadastrar
+          </Button>
         </form>
       </Form>
-    </div> */}
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
-import { UserAuthForm } from '@/components/auth/create-account-form';
+import { UserAuthForm } from '@/components/auth/login-account-form';
 
 import Link from 'next/link';
 
@@ -31,20 +31,19 @@ export default async function Login() {
 
   return (
     <>
-      <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <a
-          href="/autenticacao/entrar"
+      <div className="container relative h-[200px] flex-col items-center justify-center md:grid lg:max-w-none lg:px-0">
+        <Link
+          href="/autenticacao/cadastrar"
           className={
-            (buttonVariants({ variant: 'ghost' }),
+            (buttonVariants({ variant: 'default' }),
             'absolute right-4 top-4 md:right-8 md:top-8')
           }
         >
-          Entrar na minha conta
-        </a>
+          Ainda não tenho uma conta
+        </Link>
 
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-black dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-gray-200" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
+        <div className="relative h-full flex-col bg-muted p-10 text-black dark:border-r lg:flex justify-center items-center">
+          <div className="relative z-20 flex items-center text-2xl font-medium">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -64,7 +63,7 @@ export default async function Login() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Crie a sua conta
+                Entre na sua conta
               </h1>
               <p className="text-sm text-muted-foreground">
                 Digite abaixo o seu e-mail e senha para criar a conta
