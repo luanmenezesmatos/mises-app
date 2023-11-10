@@ -18,6 +18,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
+import { Icons } from '../icons';
+
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+
 const formSchema = z.object({
   email: z
     .string({ required_error: 'O e-mail é um campo obrigatório' })
@@ -28,10 +33,7 @@ const formSchema = z.object({
 });
 
 export function UserAuthForm() {
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,6 +41,33 @@ export function UserAuthForm() {
       password: '',
     },
   });
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsLoading(true)
+
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 3000)
+
+      const supabase = createClientComponentClient();
+      const { email, password } = values;
+      const {
+        error,
+        data: { session },
+      } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      form.reset();
+      router.refresh();
+    } catch (error) {
+      console.log('LoginAccountForm:onSubmit', error);
+    }
+  }
 
   return (
     <div className="grid gap-6">
@@ -93,7 +122,11 @@ export function UserAuthForm() {
           </div>
           <Button
             className={(buttonVariants({ variant: 'default' }), 'w-full')}
+            disabled={isLoading}
           >
+            {isLoading && (
+              <Icons.spinner className="animate-spin mr-2 w-4 h-4" />
+            )}
             Entrar
           </Button>
         </form>

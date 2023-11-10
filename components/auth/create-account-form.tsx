@@ -18,6 +18,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
+import { Icons } from '../icons';
+
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+
 const formSchema = z.object({
   firstName: z
     .string({ required_error: 'O nome é um campo obrigatório' })
@@ -37,9 +42,52 @@ const formSchema = z.object({
 });
 
 export function UserAuthForm() {
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    try {
+      setIsLoading(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+
+      const supabase = createClientComponentClient();
+      const { email, password, firstName, lastName } = values;
+
+      const {
+        error,
+        data: { user },
+      } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.log('createAccount', error);
+      }
+
+      await supabase.from('users').insert([
+        {
+          id: user?.id,
+          firstName,
+          lastName,
+          email,
+        },
+      ]);
+
+      form.reset();
+      router.refresh();
+    } catch (error) {
+      console.log('CreateAccountForm', error);
+    }
   }
+
+  /* options: {
+    emailRedirectTo: `${location.origin}/api/auth/callback`
+  } */
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -180,7 +228,11 @@ export function UserAuthForm() {
           </div>
           <Button
             className={(buttonVariants({ variant: 'default' }), 'w-full')}
+            disabled={isLoading}
           >
+            {isLoading && (
+              <Icons.spinner className="animate-spin mr-2 w-4 h-4" />
+            )}
             Cadastrar
           </Button>
         </form>

@@ -3,9 +3,8 @@ import { Metadata } from 'next';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
-import { UserAuthForm } from '@/components/auth/create-account-form';
 
-import Link from 'next/link';
+import { UserAuthForm } from '@/components/auth/create-account-form';
 
 import { buttonVariants } from '@/components/ui/button';
 
@@ -26,7 +25,7 @@ export default async function Login() {
   } catch (error) {
     console.log('Home', error);
   } finally {
-    if (loggedIn) redirect('/user-app', RedirectType.replace);
+    if (loggedIn) redirect('/dashboard', RedirectType.replace);
   }
 
   return (
