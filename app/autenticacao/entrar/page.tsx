@@ -43,7 +43,7 @@ export default async function Login() {
           Ainda não tenho uma conta
         </Link>
 
-        <div className="relative h-full flex-col bg-muted p-10 text-black dark:border-r lg:flex justify-center items-center">
+        <div className="relative h-full flex-col p-10 text-black dark:border-r lg:flex justify-center items-center">
           <div className="relative z-20 flex items-center text-2xl font-medium">
             <svg
               xmlns="http://www.w3.org/2000/svg"
