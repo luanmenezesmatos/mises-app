@@ -54,7 +54,7 @@ const subjects = [
     label: 'Personal Account',
     subjects: [
       {
-        label: 'Alicia Koch',
+        label: 'Matemática',
         value: 'personal',
       },
     ],

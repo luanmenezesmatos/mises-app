@@ -2,10 +2,14 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 
-import { UserNav } from '@/components/dashboard/header/user-nav';
-import { MainNav } from '@/components/dashboard/header/main-nav';
-import SubjectSwitcher from '@/components/dashboard/header/subject-switcher';
-import { Search } from '@/components/dashboard/header/search';
+import { CalendarDateRangePicker } from '@/components/dashboard/main/date-range-picker';
+
+import { DownloadIcon } from '@radix-ui/react-icons';
+
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { VisaoGeral } from '@/components/dashboard/tabs/visao-geral';
+import { Navbar } from '@/components/dashboard/header/navbar';
 
 export default async function Dashboard() {
   let loggedIn = false;
@@ -25,15 +29,27 @@ export default async function Dashboard() {
   return (
     <>
       <div className="hidden flex-col md:flex">
-        <div className="border-b">
-          <div className="flex h-16 items-center px-4">
-            <SubjectSwitcher />
-            <MainNav className="mx-6" />
-            <div className='ml-auto flex items-center space-x-4'>
-              <Search />
-              <UserNav />
+        <Navbar />
+
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="flex items-center justify-between space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <div className="flex items-center space-x-2">
+              <CalendarDateRangePicker />
+              <Button>
+                Fazer o Download
+                <DownloadIcon className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
+          <Tabs defaultValue="visaogeral" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="visaogeral">Visão Geral</TabsTrigger>
+              <TabsTrigger value="meudesempenho">Meu Desempenho</TabsTrigger>
+              <TabsTrigger value="meusplanos">Meus Planos</TabsTrigger>
+            </TabsList>
+            <VisaoGeral />
+          </Tabs>
         </div>
       </div>
     </>

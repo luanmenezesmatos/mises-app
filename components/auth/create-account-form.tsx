@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import { Icons } from '../icons';
+import { Icons } from '@/components/icons';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
