@@ -18,10 +18,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Checkbox } from '@/components/ui/checkbox';
 
-import { toast } from '@/components/ui/use-toast';
-import { ToastAction } from "@/components/ui/toast"
+import { useToast } from '@/components/ui/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 import { Icons } from '@/components/icons';
 
@@ -35,32 +34,30 @@ const formSchema = z.object({
   password: z
     .string({ required_error: 'A senha é um campo obrigatório' })
     .min(8, { message: 'Mínimo de 8 caracteres' }),
-  checkbox: z.literal(true, {
-    errorMap: () => ({ message: 'É necessário aceitar os termos' }),
-  }),
 });
 
 export function UserAuthForm() {
+  const { toast } = useToast();
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
       password: '',
-      checkbox: undefined,
     },
   });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
     try {
-      setIsLoading(true);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
-
       const supabase = createClientComponentClient();
       const { email, password } = values;
       const {
@@ -71,20 +68,18 @@ export function UserAuthForm() {
         password,
       });
 
-      form.reset();
-      router.refresh();
-
-      if (error) {
-        console.log('LoginAccountForm:onSubmit', error);
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
+      if (session) {
+        form.reset();
+        router.refresh();
       }
     } catch (error) {
-      console.log('LoginAccountForm:onSubmit', error);
+      toast({
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+        action: (
+          <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+        ),
+      });
     }
   }
 
@@ -137,38 +132,6 @@ export function UserAuthForm() {
                   </FormItem>
                 )}
               />
-
-              <div className="mt-4">
-                <FormField
-                  control={form.control}
-                  name="checkbox"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Aceitar os termos e condições</FormLabel>
-                        <FormDescription>
-                          Você concorda com os nossos{' '}
-                          <Link href="termos-de-servico">
-                            Termos de Serviço
-                          </Link>{' '}
-                          e{' '}
-                          <Link href="politica-de-privacidade">
-                            Política de Privacidade
-                          </Link>
-                          .
-                        </FormDescription>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
             </div>
           </div>
           <Button

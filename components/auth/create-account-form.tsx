@@ -65,8 +65,9 @@ export function UserAuthForm() {
         password,
       });
 
-      if (error) {
-        console.log('createAccount', error);
+      if (user) {
+        form.reset();
+        router.refresh();
       }
 
       await supabase.from('users').insert([
@@ -77,9 +78,6 @@ export function UserAuthForm() {
           email,
         },
       ]);
-
-      form.reset();
-      router.refresh();
     } catch (error) {
       console.log('CreateAccountForm', error);
     }
