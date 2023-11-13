@@ -7,6 +7,7 @@ import { RedirectType, redirect } from 'next/navigation';
 import { UserAuthForm } from '@/components/auth/login-account-form';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { buttonVariants } from '@/components/ui/button';
 
@@ -43,20 +44,15 @@ export default async function Login() {
           Ainda não tenho uma conta
         </Link>
 
-        <div className="relative h-full flex-col p-10 text-black dark:border-r lg:flex justify-center items-center">
-          <div className="relative z-20 flex items-center text-2xl font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-6 w-6"
-            >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
+        <div className="relative h-full flex-col p-10 dark:border-r lg:flex justify-center items-center">
+          <div className="relative flex items-center text-2xl font-medium">
+            <Image
+              src="/library-square.svg"
+              alt="Logo"
+              className="mr-2"
+              height={24}
+              width={24}
+            />
             Mises
           </div>
         </div>

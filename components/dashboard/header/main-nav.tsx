@@ -38,10 +38,10 @@ export function MainNav({
         </Link>
 
         <Link
-          href="/dashboard/resultados"
+          href="/dashboard/livros"
           className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
-          Resultados
+          Livros
         </Link>
 
         <Link

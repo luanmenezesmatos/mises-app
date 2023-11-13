@@ -70,14 +70,14 @@ export function UserAuthForm() {
         router.refresh();
       }
 
-      await supabase.from('users').insert([
+      /* await supabase.from('users').insert([
         {
           id: user?.id,
           firstName,
           lastName,
           email,
         },
-      ]);
+      ]); */
     } catch (error) {
       console.log('CreateAccountForm', error);
     }

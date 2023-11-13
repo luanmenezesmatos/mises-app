@@ -8,6 +8,8 @@ import { UserAuthForm } from '@/components/auth/create-account-form';
 
 import { buttonVariants } from '@/components/ui/button';
 
+import Image from 'next/image';
+
 export const metadata: Metadata = {
   title: 'Autenticação — Mises',
   description: 'Página de Autenticação',
@@ -25,12 +27,12 @@ export default async function Login() {
   } catch (error) {
     console.log('Home', error);
   } finally {
-    if (loggedIn) redirect('/dashboard', RedirectType.replace);
+    if (loggedIn) redirect('/autenticacao/entrar', RedirectType.replace);
   }
 
   return (
     <>
-      <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="container relative flex-col items-center justify-center md:grid lg:max-w-none lg:px-0">
         <a
           href="/autenticacao/entrar"
           className={
@@ -41,21 +43,15 @@ export default async function Login() {
           Entrar na minha conta
         </a>
 
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-black dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-gray-200" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-6 w-6"
-            >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
+        <div className="relative h-full flex-col p-10 dark:border-r lg:flex justify-center items-center">
+          <div className="relative flex items-center text-2xl font-medium">
+            <Image
+              src="/library-square.svg"
+              alt="Logo"
+              className="mr-2"
+              height={24}
+              width={24}
+            />
             Mises
           </div>
         </div>

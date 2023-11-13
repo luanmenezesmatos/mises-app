@@ -60,26 +60,48 @@ export function UserAuthForm() {
     try {
       const supabase = createClientComponentClient();
       const { email, password } = values;
-      const {
-        error,
-        data: { session },
-      } = await supabase.auth.signInWithPassword({
+      const { error, data: { session } } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
+      if (error) {
+        form.reset();
+        setIsLoading(false);
+
+        console.log('Login', error);
+      }
+
       if (session) {
         form.reset();
         router.refresh();
+
+        toast({
+          title: 'Login efetuado com sucesso!',
+          description: 'Você foi redirecionado para o painel',
+          action: (
+            <ToastAction altText="Entendido">
+              Entendido
+            </ToastAction>
+          ),
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Não foi possível efetuar o login',
+          description: 'Verifique se o e-mail e a senha estão corretos',
+          action: (
+            <ToastAction altText="Tentar novamente">
+              Tentar novamente
+            </ToastAction>
+          ),
+        });
+
+        form.reset();
+        setIsLoading(false);
       }
     } catch (error) {
-      toast({
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.',
-        action: (
-          <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-        ),
-      });
+      console.log('Login', error);
     }
   }
 
