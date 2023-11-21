@@ -33,7 +33,7 @@ export default async function Login() {
 
   return (
     <>
-      <div className="container relative h-[200px] flex-col items-center justify-center md:grid lg:max-w-none lg:px-0">
+      <div className="flex flex-col items-center justify-center">
         <Link
           href="/autenticacao/cadastrar"
           className={

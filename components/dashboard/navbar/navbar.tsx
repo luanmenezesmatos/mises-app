@@ -1,7 +1,7 @@
-import { UserNav } from '@/components/dashboard/header/user-nav';
-import { MainNav } from '@/components/dashboard/header/main-nav';
-import SubjectSwitcher from '@/components/dashboard/header/subject-switcher';
-import { Search } from '@/components/dashboard/header/search';
+import { UserNav } from '@/components/dashboard/navbar/user-nav';
+import { MainNav } from '@/components/dashboard/navbar/main-nav';
+import SubjectSwitcher from '@/components/dashboard/navbar/subject-switcher';
+import { Search } from '@/components/dashboard/navbar/search';
 
 export function Navbar() {
   return (
