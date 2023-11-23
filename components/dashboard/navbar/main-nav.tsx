@@ -1,6 +1,9 @@
 'use client';
 
+import * as React from 'react';
 import Link from 'next/link';
+
+import { MobileNav } from './mobile-nav';
 
 export function MainNav({
   className,
