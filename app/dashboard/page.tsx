@@ -56,6 +56,26 @@ export default async function Dashboard() {
 
       <div className="flex flex-col md:hidden">
         <MobileNav />
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="flex items-center justify-between space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+          </div>
+          <div className="flex items-center space-x-2">
+            <CalendarDateRangePicker />
+            <Button>
+              Fazer o Download
+              <DownloadIcon className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+          <Tabs defaultValue="visaogeral" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="visaogeral">Visão Geral</TabsTrigger>
+              <TabsTrigger value="meudesempenho">Meu Desempenho</TabsTrigger>
+              <TabsTrigger value="meusplanos">Meus Planos</TabsTrigger>
+            </TabsList>
+            <VisaoGeral />
+          </Tabs>
+        </div>
       </div>
     </>
   );
