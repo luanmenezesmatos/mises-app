@@ -62,7 +62,7 @@ export default async function Dashboard() {
           </div>
           <div className="flex items-center space-x-2">
             <CalendarDateRangePicker />
-            <Button>
+            <Button className='text-sm'>
               Fazer o Download
               <DownloadIcon className="ml-2 h-4 w-4" />
             </Button>
